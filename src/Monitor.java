@@ -53,19 +53,15 @@ public class Monitor
 		// ...
 		status[piTID] = State.HUNGRY;
         test(piTID);
-        lock.lock();
         try
 		{
 	        if (status[piTID] != State.EATING)
-	            self[piTID].await();
+	            wait();
 		}
         catch(InterruptedException e)
 		{
 			System.err.println("Monitor Error");
 			System.exit(1);
-		}
-        finally {
-			lock.unlock();
 		}
 	}
 
@@ -76,22 +72,20 @@ public class Monitor
 	public synchronized void putDown(final int piTID)
 	{
 		// ...
-		System.err.println("putDown " + status[piTID]);
+		//System.err.println("putDown " + status[piTID]);
 		status[piTID] = State.THINKING;        
         test((piTID + 1) % total);
         test((piTID + total-1) % total);
 	}
 	
-	public synchronized void test(int i) {
-		lock.lock();		
+	public synchronized void test(int i) {	
         if ((status[(i + total-1) % total] != State.EATING) &&
         (status[i] == State.HUNGRY) &&
         (status[(i + 1) % total] != State.EATING)) {
         	status[i] = State.EATING;
-        	System.err.println(i + " Philosopher " + status[i]);
-            self[i].signal();
+        	//System.err.println(i + " Philosopher " + status[i]);
+            notifyAll();
         }
-        lock.unlock();
     }
 
 	/**

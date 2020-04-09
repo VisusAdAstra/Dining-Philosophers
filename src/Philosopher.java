@@ -75,11 +75,11 @@ public class Philosopher extends BaseThread
 	 */
 	public void talk()
 	{
-		System.err.println("Philosopher.start.think() :" + getTID());
+		System.err.println("Philosopher.start.talk() :" + getTID());
 		yield();//????
 		saySomething();
 		yield();//???
-		System.err.println("Philosopher.stop.think() :" + getTID());
+		System.err.println("Philosopher.stop.talk() :" + getTID());
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class Philosopher extends BaseThread
 			DiningPhilosophers.soMonitor.pickUp(getTID());
 
 			eat();
-			System.err.println("putDown ");
+
 			DiningPhilosophers.soMonitor.putDown(getTID());
 
 			think();
@@ -101,10 +101,12 @@ public class Philosopher extends BaseThread
 			 * TODO:
 			 * A decision is made at random whether this particular
 			 * philosopher is about to say something terribly useful.
+			 * Only one (any) philosopher can be talking at a time
+			 * while they are not eating ???
 			 */
 			int trigger = (int) Math.random()*100;
-			if(true == false)
-			//if((trigger%5)==0)
+			//if(true == false)
+			if((trigger%3)==0)
 			{
 				// Some monitor ops down here...
 				DiningPhilosophers.soMonitor.requestTalk();
@@ -132,7 +134,7 @@ public class Philosopher extends BaseThread
 			"My number is " + getTID() + ""
 		};
 
-		System.out.println
+		System.err.println
 		(
 			"Philosopher " + getTID() + " says: " +
 			astrPhrases[(int)(Math.random() * astrPhrases.length)]

@@ -47,7 +47,7 @@ public class DiningPhilosophers
 			 * or the default if no arguments supplied.
 			 */
 			//System.out.println("Your first argument is: "+ argv[0]);  
-			int phi_no = 10;//Integer.parseInt(argv[0]);
+			int phi_no = 20;//Integer.parseInt(argv[0]);
 			int iPhilosophers;
 			if (phi_no > 0)
 				iPhilosophers = phi_no;
